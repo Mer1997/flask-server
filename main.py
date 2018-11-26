@@ -34,7 +34,7 @@ class Log(db.Model):
         self.info = info
 
     def __repr__(self):
-        return "<Post '{}'>".format(self.info)
+        return "<Log '{}'>".format(self.info)
 
 
 @app.route('/')
