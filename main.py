@@ -1,6 +1,6 @@
-from flask import Flask
+from flask import Flask, render_template
 from config import DevConfig
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, func
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
@@ -35,6 +35,28 @@ class Log(db.Model):
 
     def __repr__(self):
         return "<Log '{}'>".format(self.info)
+
+
+@app.route('/user/<string:username>')
+def get_info(username):
+    user = User.query.filter_by(username = username).first_or_404()
+    
+    return render_template(
+            'user.html'
+            user = user
+    )
+
+@app.route('/log/<string:username>')
+def get_logs(username):
+    user = User.query.filter_by(username = username).first_or_404()
+    logs = user.logs.order_by(Logs.created.desc()).all()
+
+    return render_template(
+        'logs.html',
+        user=user,
+        logs=logs
+    )
+
 
 
 @app.route('/')
