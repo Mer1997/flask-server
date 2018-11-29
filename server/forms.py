@@ -1,4 +1,4 @@
-from flask_wtf import Form
+from flask_wtf import Form,RecaptchaField
 from wtforms import StringField, TextAreaField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Length, EqualTo, URL
 
@@ -12,7 +12,7 @@ class LoginForm(Form):
         if not check_validate:
             return False
 
-        user=User.query.filter_by(username=self.username).first()
+        user=User.query.filter_by(username=self.username.data).first()
         if not user:
             self.username.errors.append(
                 'Invalid username or password'
@@ -54,22 +54,44 @@ class RegisterForm(Form):
 
 
 class ResetPWDForm(Form):
+    username = StringField('Username',[DataRequired()])
     old_pwd = StringField(
-       'Old_pwd',
+       'Old Password',
        validators=[DataRequired(),Length(min=6,max=16)]
     )
     new_pwd = StringField(
-       'New_pwd',
+       'New Password',
        validators=[DataRequired(),Length(min=6,max=16)]
     )
     confirm_pwd = StringField(
-       'Confirm_pwd',
-       validators=[DataRequired(),Length(min=6,max=16)]
+       'Confirm Password',
+       validators=[DataRequired(),EqualTo('new_pwd')]
     )
+    def validate(self):
+        check_validate = super(ResetPWDForm, self).validate()
+
+        if not check_validate:
+        
+            self.old_pwd.errors.append('Invalid data.')
+            return False
+
+        user = User.query.filter_by(username = self.username.data).first()
+        if not user:
+            return False
+
+        if not self.check_password(user.password, old_pwd):
+            self.old_pwd.errors.append(
+                'Incorrect password'
+            )
+            return False
+
+        return True
+
+
     
 class ResetNameForm(Form):
     new_name = StringField(
-       'New_name',
+       'New Username',
        validators=[DataRequired(),Length(min=4,max=16)]
     )
 

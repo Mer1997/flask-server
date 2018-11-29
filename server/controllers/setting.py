@@ -1,7 +1,7 @@
 import datetime
 from os import path
 from sqlalchemy import func
-from flask import render_template, Blueprint,redirect, url_for
+from flask import render_template, Blueprint,redirect, url_for, flash, request
 
 from server.models import db,Log,User
 from server.forms import ResetPWDForm,ResetNameForm
@@ -22,13 +22,13 @@ def admin(username):
         user = user
     )
 
-@setting_blueprint.route('/<string:username>/change_password', methods=['GET','POST'])
+@setting_blueprint.route('/<string:username>/change_password', methods=('GET','POST'))
 def changePassword(username):
     user = User.query.filter_by(username=username).first_or_404()
     form = ResetPWDForm()
-    if form.validate_on_submit():
-        if form.old_pwd.data == user.password and form.new_pwd.data == form.confirm_pwd.data:
-            user.password = form.new_pwd.data
+    form.username = username
+    if request.method == 'POST' and form.validate_on_submit():
+        user.password = form.new_pwd.data
         return render_template(
             'user.html',
             user=user
