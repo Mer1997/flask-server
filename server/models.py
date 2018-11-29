@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from server.extensions import bcrypt
 
 db = SQLAlchemy()
 
@@ -18,6 +19,11 @@ class User(db.Model):
     def __repr__(self):
         return "<User '{}'>".format(self.username)
 
+    def setPassword(self, password):
+        self.password = bcrypt.generate_password_hash(password)
+
+    def checkPassword(self, password):
+        return bcrypt.check_password_hash(self.password,password)
 
 class Log(db.Model):
     log_id = db.Column(db.Integer, primary_key = True)

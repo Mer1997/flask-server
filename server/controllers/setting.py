@@ -4,7 +4,7 @@ from sqlalchemy import func
 from flask import render_template, Blueprint,redirect, url_for
 
 from server.models import db,Log,User
-from server.forms import UsernameForm,PasswordForm
+from server.forms import ResetPWDForm,ResetNameForm
 
 setting_blueprint = Blueprint(
     'setting',
@@ -25,7 +25,7 @@ def admin(username):
 @setting_blueprint.route('/<string:username>/change_password', methods=['GET','POST'])
 def changePassword(username):
     user = User.query.filter_by(username=username).first_or_404()
-    form = PasswordForm()
+    form = ResetPWDForm()
     if form.validate_on_submit():
         if form.old_pwd.data == user.password and form.new_pwd.data == form.confirm_pwd.data:
             user.password = form.new_pwd.data
@@ -42,7 +42,7 @@ def changePassword(username):
 @setting_blueprint.route('/<string:username>/change_username')
 def changeUsername(username):
     user = User.query.filter_by(username=username).first_or_404()
-    form = UsernameForm()
+    form = ResetNameForm()
     if form.validate_on_submit():
         is_existed = User.query.filter_by(username=form.new_name.data).first()
         if not is_existed:

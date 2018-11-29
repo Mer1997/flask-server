@@ -1,8 +1,12 @@
+import os
 from flask_script import Manager, Server
 from flask_migrate import Migrate,MigrateCommand
-
-from server import app
+from server import create_app
 from server.models import db, User, Log
+
+
+env = os.environ.get('WEBAPP_ENV','dev')
+app = create_app('server.config.%sConfig' %env.capitalize())
 
 migrate = Migrate(app,db)
 
