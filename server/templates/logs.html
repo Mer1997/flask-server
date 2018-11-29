@@ -18,7 +18,7 @@
                 <td>{{log.info|truncate(30)|safe}}</td>
                 <td>{{log.created|safe}}</td>
 		<td>{{log.stat|safe}}</td>
-		<td><a href="{{url_for('log',username=user.username,log_id=log.log_id)}}">Show Detail</a></td>
+		<td><a href="{{url_for('logs.log',username=user.username,log_id=log.log_id)}}">Show Detail</a></td>
             </tr>
 	     {% endfor %}
     </table>

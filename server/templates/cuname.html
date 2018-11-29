@@ -6,7 +6,7 @@
 	<h3>Your current username:{{user.username}}</h3>
     </div>
 </div>
-<form methods="POST" action="{{url_for('changeUsername', username=user.username)}}">
+<form methods="POST" action="{{url_for('setting.changeUsername', username=user.username)}}">
     {{ form.hidden_tag() }}
     <div class="form-group">
         {{form.new_name.label}}

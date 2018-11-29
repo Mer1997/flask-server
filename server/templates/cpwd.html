@@ -2,7 +2,7 @@
 {% block title %}{{ user.username }}{% endblock %}
 {% block body %}
 
-<form methods="POST" action="{{url_for('changePassword', username=user.username)}}">
+<form methods="POST" action="{{url_for('setting.changePassword', username=user.username)}}">
     {{ form.hidden_tag() }}
     <div class="form-group">
 	{{form.old_pwd.label}}

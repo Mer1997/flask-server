@@ -7,15 +7,15 @@
         <tbody>
             <tr>
                 <td>username:{{user.username}}</td>
-                <td><a href="{{url_for('changeUsername',username=user.username)}}">Change</a></td>
+                <td><a href="{{url_for('setting.changeUsername',username=user.username)}}">Change</a></td>
             </tr>
             <tr>
 		<td>pasword:{{user.password}} </td>
-                <td><a href="{{url_for('changePassword',username=user.username)}}">Change</a></td>
+                <td><a href="{{url_for('setting.changePassword',username=user.username)}}">Change</a></td>
             </tr>
             <tr>
                 <td>Logs:</td>
-                <td><a href="{{url_for('logs',username=user.username)}}">Show my logs</a></td>
+                <td><a href="{{url_for('logs.logs',username=user.username)}}">Show my logs</a></td>
         </tbody>
 
     </table>
