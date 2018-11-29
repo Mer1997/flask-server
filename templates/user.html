@@ -3,14 +3,23 @@
 {% block body %}
 
 <div class = "row">
-    <div class="col-lg-10">
-	username:{{user.username}}
-	<a href="{{url_for('changePassword',username=user.username)}}">Change</a><br>
-	pasword: ******<br>
-	Logs: <a href="{{url_for('logs',username=user.username)}}">Show my logs</a>
-	
-        
-    </div>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>username:{{user.username}}</td>
+                <td><a href="{{url_for('changeUsername',username=user.username)}}">Change</a></td>
+            </tr>
+            <tr>
+		<td>pasword:{{user.password}} </td>
+                <td><a href="{{url_for('changePassword',username=user.username)}}">Change</a></td>
+            </tr>
+            <tr>
+                <td>Logs:</td>
+                <td><a href="{{url_for('logs',username=user.username)}}">Show my logs</a></td>
+        </tbody>
+
+    </table>
 </div>
 {% endblock %}
+
 

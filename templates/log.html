@@ -3,18 +3,21 @@
 {% block body %}
 
 <div class = "row">
-    <div class="col-lg-9">
-	<h1>Detail's Page</h1>
-    </div>
-    <div class ="row">
-    <div class="col-lg-12">
-	Log id :{{log.log_id}}<br>
-        Info :{{log.info|safe}}<br>
-	User:{{user.username}}<br>
-	Created time :{{log.created|safe}}<br>
-	Status :{{log.stat|safe}}<br>
-        <a href="{{url_for('home')}}">Have any question?</a>
-    </div>
-    </div>
+    <table class="table">
+	<tbody>
+	    <tr>
+		<td>Log id :</td><td>{{log.log_id}}</td></tr>
+	    <tr>
+		<td>Info :</td><td>{{log.info|safe}}</td></tr>
+	    <tr>
+		<td>User :</td><td>{{user.username}}</td></tr>
+	    <tr>
+		<td>Created time :</td><td>{{log.created|safe}}</td></tr>
+	    <tr>
+		<td>Status :</td><td>{{log.stat|safe}}</td></tr>
+	    <tr>
+		<td><a href="{{url_for('user',username=user.username)}}">Have any question?</a></td><td></td></tr>
+	</tbody>
+    </table>
 </div>
 {% endblock %}

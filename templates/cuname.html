@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }}{% endblock %}
+{% block body %}
+<div class="row">
+    <div class = "col-lg-12">
+	<h3>Your current username:{{user.username}}</h3>
+    </div>
+</div>
+<form methods="POST" action="{{url_for('changeUsername', username=user.username)}}">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{form.new_name.label}}
+        {% if form.new_name.errors %}
+            {% for e in form.new_name.errors %}
+                <p class="help-block">{{ e }}</p>
+            {% endfor %}
+        {% endif %}
+        {{ form.new_name(class_='form-control') }}
+    </div>
+    <input class="btn btn-primary" type="submit" value="Confirm">
+</form>
+
+
+{% endblock %}
+
