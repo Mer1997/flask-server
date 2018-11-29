@@ -43,14 +43,14 @@ def user(username):
     user = User.query.filter_by(username = username).first_or_404()
     
     return render_template(
-            'user.html'
-           # user = user
+            'user.html',
+            user = user
     )
 
 @app.route('/<string:username>/logs')
 def logs(username):
     user = User.query.filter_by(username = username).first_or_404()
-    logs = user.logs.order_by(Logs.created.desc()).all()
+    logs = user.logs.order_by(Log.created.desc()).all()
 
     return render_template(
         'logs.html',
@@ -58,10 +58,10 @@ def logs(username):
         logs=logs
     )
 
-@app.route('/<string:username>/logs/<int:log_id>>')
+@app.route('/<string:username>/logs/<int:log_id>')
 def log(username, log_id):
     user = User.query.filter_by(username=username).first_or_404()
-    log = user.log.filter_by(log_id=log_id).first_or_404()
+    log = user.logs.filter_by(log_id=log_id).first_or_404()
     return render_template(
         'log.html',
         user=user,
@@ -78,7 +78,7 @@ def addLog(username):
         log=log
     )
 
-@aap.route('/<string:username>/setting')
+@app.route('/<string:username>/setting')
 @app.route('/<string:username>/setting/admin')
 def admin(username):
     user = User.query.filter_by(username = username).first_or_404()
@@ -92,7 +92,7 @@ def admin(username):
 def changePassword(username):
     pass
 
-@app.route('<string:username>/setting/change_username')
+@app.route('/<string:username>/setting/change_username')
 def changeUsername(username):
     pass
 
