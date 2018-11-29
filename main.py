@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from config import DevConfig
-from flask_sqlalchemy import SQLAlchemy, func
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
@@ -24,7 +25,7 @@ class User(db.Model):
 
 
 class Log(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    log_id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     created = db.Column(db.DateTime())
     info = db.Column(db.Text)
@@ -37,17 +38,17 @@ class Log(db.Model):
         return "<Log '{}'>".format(self.info)
 
 
-@app.route('/user/<string:username>')
-def get_info(username):
+@app.route('/<string:username>')
+def user(username):
     user = User.query.filter_by(username = username).first_or_404()
     
     return render_template(
             'user.html'
-            user = user
+           # user = user
     )
 
-@app.route('/log/<string:username>')
-def get_logs(username):
+@app.route('/<string:username>/logs')
+def logs(username):
     user = User.query.filter_by(username = username).first_or_404()
     logs = user.logs.order_by(Logs.created.desc()).all()
 
@@ -57,11 +58,52 @@ def get_logs(username):
         logs=logs
     )
 
+@app.route('/<string:username>/logs/<int:log_id>>')
+def log(username, log_id):
+    user = User.query.filter_by(username=username).first_or_404()
+    log = user.log.filter_by(log_id=log_id).first_or_404()
+    return render_template(
+        'log.html',
+        user=user,
+        log=log
+    )
+
+@app.route('/<string:username>/logs/add')
+def addLog(username):
+    user = User.query.filter_by(username = username).first_or_404()
+
+    return render_template(
+        'log.html',
+        user=user,
+        log=log
+    )
+
+@aap.route('/<string:username>/setting')
+@app.route('/<string:username>/setting/admin')
+def admin(username):
+    user = User.query.filter_by(username = username).first_or_404()
+
+    return render_template(
+        'admin.html',
+        user = user
+    )
+
+@app.route('/<string:username>/setting/change_password')
+def changePassword(username):
+    pass
+
+@app.route('<string:username>/setting/change_username')
+def changeUsername(username):
+    pass
+
+
 
 
 @app.route('/')
 def home():
-    return '<h1>Hello World<h1>'
+    return render_template(
+        'home.html'
+    )
 
 if __name__ == '__main__':
     app.run()
