@@ -31,3 +31,27 @@ def login():
             user=user
         )
     return render_template('login.html',form=form)
+
+
+@main_blueprint.route('/logout',methods=['GET','POST'])
+def logout():
+    return render_template(
+            'index.html',
+    )
+
+@main_blueprint.route('/register',methods=['GET','POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        new_user = User(form.username.data)
+        new_user.set_password(form.password.data)
+
+        db.session.add(new_user)
+        db.commit()
+
+        flash("Your user has been created, please login.", category="success")
+        return redirect(url_for('.login'))
+
+    return render_template('register.html',form=form)
+
+
