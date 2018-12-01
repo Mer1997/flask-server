@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% from 'base.html' import input %}
+{% block title %}Register{% endblock %}
+{% block recaptcha %}
+    <script src='https://recaptcha.net/recaptcha/api.js'></script>
+{% endblock %}
+{% block body %}
+    <form method='POST' action="{{ url_for('main.register') }}">
+	{{ form.hidden_tag() }}
+	{{ input(form.username,'Username') }}
+	{{ input(form.password,'Password') }}
+	{{ input(form.confirm, 'Confirm') }}
+	<div class='g-recaptcha' data-sitekey='6Ld03n0UAAAAAE9966lZhkOUbrvYnGN9aL1_NsGX'></div>
+	<input class='btn btn-primary' type='submit' value='Register'>
+    </form>
+{% endblock %}
