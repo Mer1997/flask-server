@@ -19,7 +19,7 @@ def index():
     )
 
 
-@main_blueprint.route('/login',methods=['GET','POST'])
+@main_blueprint.route('/login', methods=('GET','POST'))
 def login():
     form = LoginForm()
 
@@ -30,7 +30,7 @@ def login():
             'user.html',
             user=user
         )
-    return render_template('login.html',form=form)
+    return render_template('login.html', form = form)
 
 
 @main_blueprint.route('/logout',methods=['GET','POST'])

@@ -1,26 +1,34 @@
-from flask_wtf import Form,RecaptchaField
-from wtforms import StringField, TextAreaField, PasswordField, BooleanField
+import logging
+from flask_wtf import FlaskForm,RecaptchaField
+from wtforms import StringField, TextField, TextAreaField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Length, EqualTo, URL
+from server.models import db,Log,User
 
-class LoginForm(Form):
-    username=StringField('Username',[DataRequired(),Length(max=255)])
-    password=PasswordField('Password',[DataRequired()])
+def logError(message):
+    logging.error(message)
+
+class LoginForm(FlaskForm):
+    username=TextField('Username')
+    password=PasswordField('Password')
 
     def validate(self):
+        
         check_validate = super(LoginForm, self).validate()
 
         if not check_validate:
             return False
-
-        user=User.query.filter_by(username=self.username.data).first()
+        logging.error('username is %s'%(self.username))
+        user=User.query.filter_by(username='mer').first()#self.username.data).first()
         if not user:
+            logError('username %s: Invalid username or password'%self.username.data)
             self.username.errors.append(
                 'Invalid username or password'
             )
 
             return False
         
-        if not self.user.check_password(self.password.data):
+        if not user.checkPassword(self.password.data):
+            logError('password %s:Invalid username or password'%self.password.data)
             self.username.errors.append(
                 'Invalid username or password'
             )
@@ -29,7 +37,7 @@ class LoginForm(Form):
         
         return True
 
-class RegisterForm(Form):
+class RegisterForm(FlaskForm):
     username = StringField('Username',[DataRequired(),Length(max=20)])
     password = PasswordField('Password',[DataRequired(),Length(min=8,max=16)])
     confirm = PasswordField('Confirm Password',[DataRequired(),EqualTo('password')])
@@ -53,7 +61,7 @@ class RegisterForm(Form):
         return True
 
 
-class ResetPWDForm(Form):
+class ResetPWDForm(FlaskForm):
     username = StringField('Username',[DataRequired()])
     old_pwd = StringField(
        'Old Password',
@@ -89,7 +97,7 @@ class ResetPWDForm(Form):
 
 
     
-class ResetNameForm(Form):
+class ResetNameForm(FlaskForm):
     new_name = StringField(
        'New Username',
        validators=[DataRequired(),Length(min=4,max=16)]

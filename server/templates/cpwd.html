@@ -2,36 +2,36 @@
 {% block title %}{{ user.username }}{% endblock %}
 {% block body %}
 
-<form methods="POST" action="{{url_for('setting.changePassword', username=user.username)}}">
+<form method='POST' action="{{url_for('setting.changePassword', username=user.username)}}">
     {{ form.hidden_tag() }}
-    <div class="form-group">
+    <div class='form-group'>
 	{{form.old_pwd.label}}
 	{% if form.old_pwd.errors %}
 	    {% for e in form.old_pwd.errors %}
-		<p class="help-block">{{ e }}</p>
+		<p class='help-block'>{{ e }}</p>
 	    {% endfor %}
 	{% endif %}
 	{{ form.old_pwd(class_='form-control') }}
     </div>
-    <div class="form-group">
+    <div class='form-group'>
         {{form.new_pwd.label}}
         {% if form.new_pwd.errors %}
             {% for e in form.new_pwd.errors %}
-                <p class="help-block">{{ e }}</p>
+                <p class='help-block'>{{ e }}</p>
             {% endfor %}
         {% endif %}
         {{ form.new_pwd(class_='form-control') }}
     </div>
-    <div class="form-group">
+    <div class='form-group'>
         {{form.confirm_pwd.label}}
         {% if form.confirm_pwd.errors %}
             {% for e in form.confirm_pwd.errors %}
-                <p class="help-block">{{ e }}</p>
+                <p class='help-block'>{{ e }}</p>
             {% endfor %}
         {% endif %}
         {{ form.confirm_pwd(class_='form-control') }}
     </div>
-    <input class="btn btn-primary" type="submit" value="Confirm">
+    <input class='btn btn-primary' type='submit' value='Confirm'>
 </form>
 	
 
