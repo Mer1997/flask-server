@@ -1,9 +1,11 @@
 1. changePassword && changeUsername
 
-2. Login && Sign in && Logout 's view funcation
+2. Restful
 
-3. login.html && register.html
+3. Need login before user do any operation
 
-4. Restful
+4. Modify User model add the Adress and phonenumber
+
+5. add func: delete log
 
 

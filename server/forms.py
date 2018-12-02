@@ -19,7 +19,7 @@ class LoginForm(FlaskForm):
         if not check_validate:
             return False
         logging.error('username is %s'%(self.username))
-        user=User.query.filter_by(username='mer').first()#self.username.data).first()
+        user=User.query.filter_by(username=self.username.data).first()#self.username.data).first()
         if not user:
             logError('username %s: Invalid username or password'%self.username.data)
             self.username.errors.append(
@@ -28,6 +28,8 @@ class LoginForm(FlaskForm):
 
             return False
         
+        flag = self.password.data == 'acacac'
+        logError('form.password = acacac is %s'%flag)
         if not user.checkPassword(self.password.data):
             logError('password %s:Invalid username or password'%self.password.data)
             self.username.errors.append(
@@ -60,7 +62,7 @@ class RegisterForm(FlaskForm):
                 "User with that name already exists"
             )
             return False
-    
+        logError('rigister successful: username :%s, password :%s'%(self.username.data, self.password.data)) 
         return True
 
 class LogForm(FlaskForm):
@@ -102,7 +104,7 @@ class ResetPWDForm(FlaskForm):
         if not user:
             return False
 
-        if not self.check_password(user.password, old_pwd):
+        if not self.check_password(user.password, self.old_pwd.data):
             self.old_pwd.errors.append(
                 'Incorrect password'
             )
