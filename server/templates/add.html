@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% from 'base.html' import input %}
+{% block title %}Add Log{% endblock %}
+{% block body %}
+    <form method='post' action="">
+	{{ form.hidden_tag() }}
+	{{ input('info','Info') }}
+	<input class='btn-primary' type='submit' value='login'>
+    </form>
+{% endblock %}
