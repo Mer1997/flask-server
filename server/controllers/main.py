@@ -19,7 +19,7 @@ def index():
     )
 
 
-@main_blueprint.route('/login', methods=('GET','POST'))
+@main_blueprint.route('/login', methods=['GET','POST'])
 def login():
     form = LoginForm()
 
@@ -44,10 +44,10 @@ def register():
     form = RegisterForm()
     if form.validate_on_submit():
         new_user = User(form.username.data)
-        new_user.set_password(form.password.data)
+        new_user.setPassword(form.password.data)
 
         db.session.add(new_user)
-        db.commit()
+        db.session.commit()
 
         flash("Your user has been created, please login.", category="success")
         return redirect(url_for('.login'))

@@ -1,6 +1,6 @@
 import logging
 from flask_wtf import FlaskForm,RecaptchaField
-from wtforms import StringField, TextField, TextAreaField, PasswordField, BooleanField
+from wtforms import TextField, SubmitField, TextAreaField, PasswordField, BooleanField
 from wtforms.validators import DataRequired, Length, EqualTo, URL
 from server.models import db,Log,User
 
@@ -10,6 +10,7 @@ def logError(message):
 class LoginForm(FlaskForm):
     username=TextField('Username')
     password=PasswordField('Password')
+    submit=SubmitField('Sign In')
 
     def validate(self):
         
@@ -38,21 +39,23 @@ class LoginForm(FlaskForm):
         return True
 
 class RegisterForm(FlaskForm):
-    username = StringField('Username',[DataRequired(),Length(max=20)])
-    password = PasswordField('Password',[DataRequired(),Length(min=8,max=16)])
+    username = TextField('Username',[DataRequired(),Length(max=20)])
+    password = PasswordField('Password',[DataRequired(),Length(min=3,max=16)])
     confirm = PasswordField('Confirm Password',[DataRequired(),EqualTo('password')])
 
-    recaptcha = RecaptchaField()
+    #recaptcha = RecaptchaField()
 
     def validate(self):
         check_validate = super(RegisterForm, self).validate()
-
+        logError('%s - %s - %s'%(self.username.data, self.password.data, self.confirm.data))
         if not check_validate:
+            logError('Form: validate was false')
             return False
 
         user = User.query.filter_by(username = self.username.data).first()
 
         if user:
+            logError('Username %s: User with that name already exists'%self.username)
             self.username.errors.append(
                 "User with that name already exists"
             )
@@ -60,18 +63,30 @@ class RegisterForm(FlaskForm):
     
         return True
 
+class LogForm(FlaskForm):
+    info = TextField('Info')
+
+    def validate(self):
+        check_validate = super(LogForm, self).validate()
+
+        if not check_validate:
+            logError('Logs info was wrong.')
+            return False
+        
+        return True     
+
 
 class ResetPWDForm(FlaskForm):
-    username = StringField('Username',[DataRequired()])
-    old_pwd = StringField(
+    username = TextField('Username',[DataRequired()])
+    old_pwd = TextField(
        'Old Password',
        validators=[DataRequired(),Length(min=6,max=16)]
     )
-    new_pwd = StringField(
+    new_pwd = TextField(
        'New Password',
        validators=[DataRequired(),Length(min=6,max=16)]
     )
-    confirm_pwd = StringField(
+    confirm_pwd = TextField(
        'Confirm Password',
        validators=[DataRequired(),EqualTo('new_pwd')]
     )
@@ -98,7 +113,7 @@ class ResetPWDForm(FlaskForm):
 
     
 class ResetNameForm(FlaskForm):
-    new_name = StringField(
+    new_name = TextField(
        'New Username',
        validators=[DataRequired(),Length(min=4,max=16)]
     )

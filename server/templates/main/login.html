@@ -4,8 +4,8 @@
 {% block body %}
     <form method='post'  action="">
 	{{ form.hidden_tag() }}
-	{{ input(form.username, 'Username') }}
-	{{ input(form.password, 'Password') }}
+	{{ input('username', 'Username') }}
+	{{ input('password', 'Password') }}
 	<input class='btn-primary' type='submit' value='Login'>
     </form>
 {% endblock %}
