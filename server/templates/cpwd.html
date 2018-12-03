@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% from 'base.html' import input %}
 {% block title %}{{ user.username }}{% endblock %}
 {% block body %}
 
-<form method='POST' action="{{url_for('setting.changePassword', username=user.username)}}">
+<form method='POST' action="">
     {{ form.hidden_tag() }}
     <div class='form-group'>
 	{{form.old_pwd.label}}

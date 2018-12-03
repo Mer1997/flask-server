@@ -1,3 +1,4 @@
+import logging
 from flask_sqlalchemy import SQLAlchemy
 from server.extensions import bcrypt
 
@@ -20,7 +21,10 @@ class User(db.Model):
         return "<User '{}'>".format(self.username)
 
     def setPassword(self, password):
+        logging.info('old password hash is %s'%self.password)
+        logging.info('new password is %s'%password)
         self.password = bcrypt.generate_password_hash(password)
+        logging.info('new password hash is %s'%self.password)
 
     def checkPassword(self, password):
         return bcrypt.check_password_hash(self.password,password)

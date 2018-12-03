@@ -3,7 +3,6 @@
 {% block title %}Login{% endblock %}
 {% block body %}
     <form method='post'  action="">
-	{{ form.hidden_tag() }}
 	{{ input('username', 'Username') }}
 	{{ input('password', 'Password') }}
 	<input class='btn-primary' type='submit' value='Login'>

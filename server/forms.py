@@ -28,8 +28,6 @@ class LoginForm(FlaskForm):
 
             return False
         
-        flag = self.password.data == 'acacac'
-        logError('form.password = acacac is %s'%flag)
         if not user.checkPassword(self.password.data):
             logError('password %s:Invalid username or password'%self.password.data)
             self.username.errors.append(
@@ -41,8 +39,8 @@ class LoginForm(FlaskForm):
         return True
 
 class RegisterForm(FlaskForm):
-    username = TextField('Username',[DataRequired(),Length(max=20)])
-    password = PasswordField('Password',[DataRequired(),Length(min=3,max=16)])
+    username = TextField('Username',[DataRequired(),Length(min=4,max=20)])
+    password = PasswordField('Password',[DataRequired(),Length(min=6,max=16)])
     confirm = PasswordField('Confirm Password',[DataRequired(),EqualTo('password')])
 
     #recaptcha = RecaptchaField()
@@ -79,35 +77,15 @@ class LogForm(FlaskForm):
 
 
 class ResetPWDForm(FlaskForm):
-    username = TextField('Username',[DataRequired()])
-    old_pwd = TextField(
-       'Old Password',
-       validators=[DataRequired(),Length(min=6,max=16)]
-    )
-    new_pwd = TextField(
-       'New Password',
-       validators=[DataRequired(),Length(min=6,max=16)]
-    )
-    confirm_pwd = TextField(
-       'Confirm Password',
-       validators=[DataRequired(),EqualTo('new_pwd')]
-    )
+    old_pwd = TextField('Old Password',validators=[DataRequired(),Length(min=6,max=16)])
+    new_pwd = TextField('New Password',[DataRequired(),Length(min=6,max=16)])
+    confirm_pwd = TextField('Confirm Password',[DataRequired(),EqualTo('new_pwd')])
     def validate(self):
         check_validate = super(ResetPWDForm, self).validate()
 
         if not check_validate:
         
             self.old_pwd.errors.append('Invalid data.')
-            return False
-
-        user = User.query.filter_by(username = self.username.data).first()
-        if not user:
-            return False
-
-        if not self.check_password(user.password, self.old_pwd.data):
-            self.old_pwd.errors.append(
-                'Incorrect password'
-            )
             return False
 
         return True

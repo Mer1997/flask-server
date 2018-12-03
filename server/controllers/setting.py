@@ -9,7 +9,7 @@ from server.forms import ResetPWDForm,ResetNameForm
 setting_blueprint = Blueprint(
     'setting',
     __name__,
-    template_folder=path.join(path.pardir,'templates','setting'),
+    template_folder='../templates/setting',
     url_prefix="/setting"
 )
 
@@ -22,13 +22,18 @@ def admin(username):
         user = user
     )
 
-@setting_blueprint.route('/<string:username>/change_password', methods=('GET','POST'))
+@setting_blueprint.route('/<string:username>/change_password', methods=['GET','POST'])
 def changePassword(username):
     user = User.query.filter_by(username=username).first_or_404()
     form = ResetPWDForm()
-    form.username = username
-    if request.method == 'POST' and form.validate_on_submit():
-        user.password = form.new_pwd.data
+    if form.validate_on_submit():
+        if not user.checkPassword(form.old_pwd.data):
+            return render_template(
+                'cpwd.html',
+                user = user,
+                form=form
+                )
+        user.setPassword(form.new_pwd.data)
         return render_template(
             'user.html',
             user=user
