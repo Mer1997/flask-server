@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
-{% from 'base.html' import input %}
+{% from 'base.html' import input, msg %}
 {% block title %}Login{% endblock %}
 {% block body %}
+    <div>
     <form method='post'  action="">
+	{{ form.hidden_tag() }}
 	{{ input('username', 'Username') }}
+	{{ msg(form.username.errors) }}
 	{{ input('password', 'Password') }}
-	<input class='btn-primary' type='submit' value='Login'>
+	{{ msg(form.password.errors) }}
+	<input class='btn btn-primary' type='submit' value='Login'>
     </form>
+    </div>
 {% endblock %}
 

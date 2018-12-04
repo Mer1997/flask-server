@@ -7,7 +7,7 @@ from server.models import db,Log,User
 logs_blueprint = Blueprint(
     'logs',
     __name__,
-    template_folder='template/log',
+    template_folder='../templates/log',
     url_prefix='/log'
     )
 

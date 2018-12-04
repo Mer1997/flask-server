@@ -8,7 +8,7 @@ from server.models import db,Log,User
 user_blueprint = Blueprint(
     'user',
     __name__,
-    template_folder=path.join(path.pardir,'templates','user'),
+    template_folder='../templates/user',
     url_prefix='/user'
 )
 

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% from 'base.html' import input %}
+{% from 'base.html' import input,msg %}
 {% block title %}Register{% endblock %}
 {% block recaptcha %}
 {% endblock %}
@@ -7,8 +7,11 @@
     <form method='post' action="">
 	{{ form.hidden_tag() }}
 	{{ input('username','Username') }}
+	{{ msg(form.username.errors) }}
 	{{ input('password','Password') }}
+	{{ msg(form.password.errors) }}
 	{{ input('confirm', 'Confirm') }}
+	{{ msg(form.confirm.errors) }}
 	<input class='btn btn-primary' type='submit' value='Register'>
     </form>
 {% endblock %}

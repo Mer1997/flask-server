@@ -20,17 +20,16 @@ def index():
 
 @main_blueprint.route('/login', methods=['GET','POST'])
 def login():
-    form = LoginForm(meta={'csrf':False})
+    form = LoginForm()
 
     if form.validate_on_submit():
         flash("Your have been logged in.", category="success")
         user = User.query.filter_by(username=form.username.data).first()
-        logging.error('Login Successful')
-        return 'Login Successful.'
-        '''return render_template(
+        logging.info('Login Successful')
+        return render_template(
             'user.html',
             user=user
-        )'''
+        )
     return render_template('login.html', form = form)
 
 

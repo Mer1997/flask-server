@@ -8,9 +8,8 @@ def logError(message):
     logging.error(message)
 
 class LoginForm(FlaskForm):
-    username=TextField('Username')
-    password=PasswordField('Password')
-    submit=SubmitField('Sign In')
+    username=TextField('Username',[DataRequired()])
+    password=PasswordField('Password',[DataRequired()])
 
     def validate(self):
         
@@ -18,21 +17,17 @@ class LoginForm(FlaskForm):
 
         if not check_validate:
             return False
-        logging.error('username is %s'%(self.username))
-        user=User.query.filter_by(username=self.username.data).first()#self.username.data).first()
+        logging.info('username is %s'%(self.username))
+        user=User.query.filter_by(username=self.username.data).first()
         if not user:
-            logError('username %s: Invalid username or password'%self.username.data)
-            self.username.errors.append(
-                'Invalid username or password'
-            )
+            logging.info('username %s: Invalid username or password'%self.username.data)
+            self.username.errors.append('Invalid username or password')
 
             return False
         
         if not user.checkPassword(self.password.data):
-            logError('password %s:Invalid username or password'%self.password.data)
-            self.username.errors.append(
-                'Invalid username or password'
-            )
+            logging.info('password %s:Invalid username or password'%self.password.data)
+            self.password.errors.append('Invalid username or password')
 
             return False
         
@@ -43,13 +38,13 @@ class RegisterForm(FlaskForm):
     password = PasswordField('Password',[DataRequired(),Length(min=6,max=16)])
     confirm = PasswordField('Confirm Password',[DataRequired(),EqualTo('password')])
 
-    #recaptcha = RecaptchaField()
+    recaptcha = RecaptchaField('Recaptcha')
 
     def validate(self):
         check_validate = super(RegisterForm, self).validate()
-        logError('%s - %s - %s'%(self.username.data, self.password.data, self.confirm.data))
+        logging.info('%s - %s - %s'%(self.username.data, self.password.data, self.confirm.data))
         if not check_validate:
-            logError('Form: validate was false')
+            logging.info('Form: validate was false')
             return False
 
         user = User.query.filter_by(username = self.username.data).first()
@@ -60,7 +55,7 @@ class RegisterForm(FlaskForm):
                 "User with that name already exists"
             )
             return False
-        logError('rigister successful: username :%s, password :%s'%(self.username.data, self.password.data)) 
+        logging.info('rigister successful: username :%s, password :%s'%(self.username.data, self.password.data)) 
         return True
 
 class LogForm(FlaskForm):
@@ -70,7 +65,7 @@ class LogForm(FlaskForm):
         check_validate = super(LogForm, self).validate()
 
         if not check_validate:
-            logError('Logs info was wrong.')
+            logging.info('Logs info was wrong.')
             return False
         
         return True     
@@ -93,8 +88,5 @@ class ResetPWDForm(FlaskForm):
 
     
 class ResetNameForm(FlaskForm):
-    new_name = TextField(
-       'New Username',
-       validators=[DataRequired(),Length(min=4,max=16)]
-    )
+    new_name = TextField('New Username',[DataRequired(),Length(min=4,max=16)])
 
