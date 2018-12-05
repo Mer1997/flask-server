@@ -1,38 +1,17 @@
 {% extends "base.html" %}
-{% from 'base.html' import input %}
+{% from 'base.html' import input, msg %}
 {% block title %}{{ user.username }}{% endblock %}
 {% block body %}
-
-<form method='POST' action="">
-    {{ form.hidden_tag() }}
-    <div class='form-group'>
-	{{form.old_pwd.label}}
-	{% if form.old_pwd.errors %}
-	    {% for e in form.old_pwd.errors %}
-		<p class='help-block'>{{ e }}</p>
-	    {% endfor %}
-	{% endif %}
-	{{ form.old_pwd(class_='form-control') }}
-    </div>
-    <div class='form-group'>
-        {{form.new_pwd.label}}
-        {% if form.new_pwd.errors %}
-            {% for e in form.new_pwd.errors %}
-                <p class='help-block'>{{ e }}</p>
-            {% endfor %}
-        {% endif %}
-        {{ form.new_pwd(class_='form-control') }}
-    </div>
-    <div class='form-group'>
-        {{form.confirm_pwd.label}}
-        {% if form.confirm_pwd.errors %}
-            {% for e in form.confirm_pwd.errors %}
-                <p class='help-block'>{{ e }}</p>
-            {% endfor %}
-        {% endif %}
-        {{ form.confirm_pwd(class_='form-control') }}
-    </div>
-    <input class='btn btn-primary' type='submit' value='Confirm'>
+    <div>
+    <form method='POST' action="">
+	{{ form.hidden_tag() }}
+	{{ input('old_pwd', 'Old Password') }}
+	{{ msg(form.old_pwd.errors) }}     
+	{{ input('new_pwd', 'New Password') }}
+	{{ msg(form.new_pwd.errors) }}     
+	{{ input('confirm_pwd', 'Confirm') }}
+	{{ msg(form.confirm_pwd.errors) }}
+	<input class='btn btn-primary' type='submit' value='Confirm'>
 </form>
 	
 

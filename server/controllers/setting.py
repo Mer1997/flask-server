@@ -34,6 +34,7 @@ def changePassword(username):
                 form=form
                 )
         user.setPassword(form.new_pwd.data)
+        db.session.commit()
         return render_template(
             'user.html',
             user=user
