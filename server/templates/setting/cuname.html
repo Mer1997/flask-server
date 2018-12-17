@@ -1,24 +1,22 @@
 {% extends "base.html" %}
+{% from 'base.html' import input,msg %}
 {% block title %}{{ user.username }}{% endblock %}
 {% block body %}
 <div class="row">
-    <div class = "col-lg-12">
-	<h3>Your current username:{{user.username}}</h3>
+    <div class = "col-lg-5">
+	<div class = "well well-lg">你当前的用户名为:{{user.username}}</div>
     </div>
 </div>
-<form methods="POST" action="{{url_for('setting.changeUsername', username=user.username)}}">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-        {{form.new_name.label}}
-        {% if form.new_name.errors %}
-            {% for e in form.new_name.errors %}
-                <p class="help-block">{{ e }}</p>
-            {% endfor %}
-        {% endif %}
-        {{ form.new_name(class_='form-control') }}
+<div class="row">
+    <div class = "col-lg-4">
+	<form methods="POST" action="">
+	    {{ form.hidden_tag() }}
+	    {{ input('new_name', '新用户名') }}
+	    {{ msg(form.new_name.errors) }}
+	    <input class="btn btn-primary" type="submit" value="Confirm">
+	</form>
     </div>
-    <input class="btn btn-primary" type="submit" value="Confirm">
-</form>
+</div>
 
 
 {% endblock %}

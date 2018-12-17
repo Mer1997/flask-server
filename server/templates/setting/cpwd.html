@@ -2,7 +2,7 @@
 {% from 'base.html' import input, msg %}
 {% block title %}{{ user.username }}{% endblock %}
 {% block body %}
-    <div>
+    <div class = "col-lg-6">
     <form method='POST' action="">
 	{{ form.hidden_tag() }}
 	{{ input('old_pwd', 'Old Password') }}
@@ -12,7 +12,8 @@
 	{{ input('confirm_pwd', 'Confirm') }}
 	{{ msg(form.confirm_pwd.errors) }}
 	<input class='btn btn-primary' type='submit' value='Confirm'>
-</form>
+    </form>
+    </div>
 	
 
 {% endblock %}

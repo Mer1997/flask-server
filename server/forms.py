@@ -89,4 +89,10 @@ class ResetPWDForm(FlaskForm):
     
 class ResetNameForm(FlaskForm):
     new_name = TextField('New Username',[DataRequired(),Length(min=4,max=16)])
+    def validate(self):
+        check_validate = super(ResetNameForm,self).validate()
 
+        if not check_validate:
+            self.new_name.errors.append('Invalid data.')
+            return False
+        return True;

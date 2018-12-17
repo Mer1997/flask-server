@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
-{% from 'base.html' import input %}
+{% from 'base.html' import input,msg %}
 {% block title %}Add Log{% endblock %}
 {% block body %}
-    <form method='post' action="">
-	{{ form.hidden_tag() }}
-	{{ input('info','Info') }}
-	<input class='btn-primary' type='submit' value='login'>
-    </form>
+    <div class = 'row'>
+	<div class = 'col-lg-4'>
+	<form method='post' action="">
+	    {{ form.hidden_tag() }}
+	    {{ input('info','订单信息') }}
+	    {{ msg(form.info.errors) }}
+	    {{ input('service', '选择配送点', type = 'select1') }}
+	    {{ input('destination', '选择目的地', type = 'select2') }}
+	    <input class='btn btn-info' type='submit' value='login'>
+	</form>
+	</div>
+    </div>
 {% endblock %}

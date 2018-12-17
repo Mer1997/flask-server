@@ -45,7 +45,7 @@ def changePassword(username):
             form=form
         )
 
-@setting_blueprint.route('/<string:username>/change_username')
+@setting_blueprint.route('/<string:username>/change_username', methods=['GET','POST'])
 def changeUsername(username):
     user = User.query.filter_by(username=username).first_or_404()
     form = ResetNameForm()

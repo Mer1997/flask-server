@@ -39,7 +39,7 @@ def addLog(username):
     form = LogForm()
 
     if form.validate_on_submit():
-        flash("The log has been added successful.")
+        flash("The log has been added successful.",category='success')
         new_log = Log(form.info.data)
         new_log.user = user
         new_log.stat = 'Wait Process'
@@ -48,7 +48,7 @@ def addLog(username):
         db.session.add(new_log)
         db.session.commit()
         return render_template('log.html',user=user,log = new_log)
-    flash("Invalid Log Info")
+    flash("Invalid Log Info",category='warning')
     return render_template(
         'add.html',
         user=user,

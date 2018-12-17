@@ -41,11 +41,28 @@
 </html>
 
 {% macro input(name, label, value='', type='text') %}
-    <div class="form-group">
-	<label for='{{ name }}'>{{ label }}</label>
-	<input type='{{ type }}' name='{{ name }}' value='{{ value | escape }}' class='form-control'>
-    </div>
-
+    {% if type == 'text' %} 
+	<div class="form-group">
+	    <label for='{{ name }}'>{{ label }}</label>
+	    <input type='{{ type }}' name='{{ name }}' value='{{ value | escape }}' class='form-control'>
+	</div>
+    {% elif type == 'select1' %}
+	<div class ="form-group">
+	    <label for='{{ name }}'>{{ label }}</label>
+	    <select class = 'form-control' name='{{ name }}'>
+		<option value='south'>南校区</option>
+		<option value='north'>北校区</option>
+	    </select>
+	</div>
+    {% elif type == 'select2' %}
+	<div class ="form-group">
+	    <label for='{{ name }}'>{{ label }}</label>
+	    <select class = 'form-control' name='{{ name }}'>
+		<option value='21#'>天和苑1号楼</option>
+		<option value='22#'>天和苑2号楼</option>
+	    </select>
+	</div>
+    {% endif %}
 {% endmacro %}
 
 {% macro msg(messages, category='warning', closed=False) %}
