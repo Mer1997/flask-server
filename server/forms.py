@@ -72,7 +72,7 @@ class LogForm(FlaskForm):
 
 
 class ResetPWDForm(FlaskForm):
-    old_pwd = TextField('Old Password',validators=[DataRequired(),Length(min=6,max=16)])
+    old_pwd = TextField('Old Password',[DataRequired(),Length(min=6,max=16)])
     new_pwd = TextField('New Password',[DataRequired(),Length(min=6,max=16)])
     confirm_pwd = TextField('Confirm Password',[DataRequired(),EqualTo('new_pwd')])
     def validate(self):
@@ -88,11 +88,11 @@ class ResetPWDForm(FlaskForm):
 
     
 class ResetNameForm(FlaskForm):
-    new_name = TextField('New Username',[DataRequired(),Length(min=4,max=16)])
+    new_name = TextField('New Username',[DataRequired(),Length(min=2,max=16)])
     def validate(self):
         check_validate = super(ResetNameForm,self).validate()
 
         if not check_validate:
             self.new_name.errors.append('Invalid data.')
             return False
-        return True;
+        return True

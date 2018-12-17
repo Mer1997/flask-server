@@ -9,7 +9,7 @@
 </div>
 <div class="row">
     <div class = "col-lg-4">
-	<form methods="POST" action="">
+	<form method="POST" action="">
 	    {{ form.hidden_tag() }}
 	    {{ input('new_name', '新用户名') }}
 	    {{ msg(form.new_name.errors) }}

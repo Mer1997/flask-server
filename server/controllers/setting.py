@@ -52,16 +52,20 @@ def changeUsername(username):
     if form.validate_on_submit():
         is_existed = User.query.filter_by(username=form.new_name.data).first()
         if not is_existed:
-            User.query.filter_by(username=username).first_or_404().update({
-                    'username': form.new_name.data
-                })
+            user = User.query.filter_by(username=username).first()
+            '''.update({
+                    "username": form.new_name.data
+                })'''
+            user.username = form.new_name.data
             db.session.commit()
         else:
+            flash('username is already existed.', category='warning')
             pass
         return render_template(
             'user.html',
             user=user
         )
+    flash('Form not has been submit.', category='warning')
     return render_template(
             'cuname.html',
             user=user,
