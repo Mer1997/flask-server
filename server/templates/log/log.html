@@ -6,15 +6,15 @@
     <table class="table">
 	<tbody>
 	    <tr>
-		<td>Log id :</td><td>{{log.log_id}}</td></tr>
+		<td>用户id :</td><td>{{log.log_id}}</td></tr>
 	    <tr>
-		<td>Info :</td><td>{{log.info|safe}}</td></tr>
+		<td>订单信息 :</td><td>{{log.info|safe}}</td></tr>
 	    <tr>
-		<td>User :</td><td>{{user.username}}</td></tr>
+		<td>用户 :</td><td>{{user.username}}</td></tr>
 	    <tr>
-		<td>Created time :</td><td>{{log.created|safe}}</td></tr>
+		<td>创建时间 :</td><td>{{log.created|safe}}</td></tr>
 	    <tr>
-		<td>Status :</td><td>{{log.stat|safe}}</td></tr>
+		<td>状态 :</td><td>{{log.stat|safe}}</td></tr>
 	    <tr>
 		<td><a href="{{url_for('user.user',username=user.username)}}">Have any question?</a></td><td></td></tr>
 	</tbody>
