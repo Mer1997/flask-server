@@ -4,6 +4,7 @@ from sqlalchemy import func
 from flask import render_template, Blueprint,redirect, url_for
 
 from server.models import db,Log,User
+from server.forms import LogForm
 
 user_blueprint = Blueprint(
     'user',
@@ -22,4 +23,10 @@ def user(username):
             user = user
     )
 
-
+@user_blueprint.route('/feedback')
+def feedback():
+    form = LogForm()
+    return render_template(
+            'feedback.html',
+            form=form
+            )

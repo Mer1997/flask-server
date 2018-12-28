@@ -2,7 +2,13 @@
 {% block title %}{{ user.username }}{% endblock %}
 {% block body %}
 
-<div class = "row">
+    <div class = 'row'>
+	<div class = 'col-lg-9'></div>
+	<div class = 'col-lg-2'><input class='form-control' type='text' name='search'></div>
+	<div class = 'col-lg-1'><button type = 'button' class = 'btn btn-info'>Search</button></div>
+    </div>
+    <div class = 'divider'><hr/></div>
+    <div class = 'row'>
     <table class="table">
 	<thead>
 	    <tr>
@@ -22,5 +28,5 @@
             </tr>
 	     {% endfor %}
     </table>
-</div>
+    </div>
 {% endblock %}

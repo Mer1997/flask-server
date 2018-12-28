@@ -16,6 +16,15 @@
 	    <tr>
 		<td>状态 :</td><td>{{log.stat|safe}}</td></tr>
 	    <tr>
+		<td>备注 :</td><td>我的订单&nbsp;&nbsp;<a href='#'>修改备注</a></td>
+	    </tr>
+	    {% if log.stat == 'Wait Process'%}
+		<tr>
+		    <td><input type='button' class = 'btn btn-info' value='已完成'></td>
+		    <td><input type='button' class = 'btn btn-warning' value='延长订单'></td>
+		</tr>
+	    {% endif %}
+	    <tr>
 		<td><a href="{{url_for('user.user',username=user.username)}}">Have any question?</a></td><td></td></tr>
 	</tbody>
     </table>

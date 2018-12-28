@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% from 'base.html' import input,msg %}
+{% block title %}用户反馈{% endblock %}
+{% block body %}
+        <div class = 'row'>
+        <div class = 'col-lg-8'>
+        <form method='post' action="">
+            {{ form.hidden_tag() }}
+            {{ input('info','标题') }}
+            {{ msg(form.info.errors) }}
+	    <div class="form-group">
+		<label for="comment">您的意见或建议:</label>
+		<textarea class="form-control" rows="5" id="comment"></textarea>
+	    </div>
+            <input class='btn btn-info' type='submit' value='提交反馈'>
+        </form>
+        </div>
+    </div>
+
+{% endblock %}
